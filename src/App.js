@@ -1,10 +1,10 @@
 import './App.css';
 import React, {useState} from 'react';
 import Todo from './components/Todo';
+import TodoForm from './components/TodoForm';
 
 function App() {
   const [todos, setTodo] = useState([]);
-  const [currTodo, setCurrTodo] = useState('');
   
   // two different way to remove values from todo list one
   // would be to splice out the value using its index and the 
@@ -18,28 +18,16 @@ function App() {
     setTodo(l);
   };
 
-  const addTodo = (addTodo) => {
-    let todoList = [...todos];
-    todoList.push(addTodo);
-    setCurrTodo('');
-    setTodo([...todos, currTodo]);
-    console.log(todos);
-  };
-
-  const createTodoEl = (todoEl) => {
-    setCurrTodo(todoEl.target.value)
-    console.log('currTodo state: ' + currTodo);
+  const addTodo = (todo) => {
+    const newTodos = [...todos, todo];
+    setTodo(newTodos);
   };
 
   return (
     <div className="container">
-      <input
-        placeholder='enter todo'
-        onChange={(e) => createTodoEl(e)}
-        value={currTodo}
-      />
-      <button onClick={() => addTodo()}>Submit</button>
-      <div>
+
+      <TodoForm addTodo={addTodo} />
+      <div className='todos'>
         {todos.map((todo, index) => (
           <div>
             <Todo key={todo} index={index} todo={todo} deleteTodo={deleteTodo}/>
